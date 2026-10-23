@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph-Based Customer Behavior Modeling | Recommendation System</title>
+  
+  <!-- Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Vis.js Network CDN -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  <!-- Luxury Noir, White & Silver CSS -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+  <!-- Top Horizontal Navigation -->
+  <header class="navbar">
+    <a href="#" class="brand">
+      <div class="brand-icon">
+        <i class="fas fa-network-wired"></i>
+      </div>
+      <div>
+        <h1>GraphRec // AI</h1>
+        <div style="font-size:0.72rem; color:var(--text-muted); font-weight:500;">
+          Customer Behavior Modeling &bull; PyTorch LightGCN &amp; PageRank
+        </div>
+      </div>
+    </a>
+
+    <!-- Horizontal Navigation Tabs -->
+    <nav class="nav-tabs-horizontal">
+      <button class="nav-tab-btn active" data-tab="tab-home">
+        <i class="fas fa-store"></i> Home &amp; Catalog
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-recs">
+        <i class="fas fa-magic"></i> Personalized Recs
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-graph">
+        <i class="fas fa-project-diagram"></i> Network Graph
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-benchmark">
+        <i class="fas fa-chart-line"></i> Benchmark
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-arch">
+        <i class="fas fa-layer-group"></i> Architecture
+      </button>
+    </nav>
+
+    <!-- Top Right Actions -->
+    <div class="nav-actions">
+      <span class="badge-tag">
+        <i class="fas fa-circle" style="font-size:0.45rem; color:#FFFFFF;"></i>
+        <span>Live Engine</span>
+      </span>
+      <button class="theme-toggle-btn" id="btn-theme-toggle" title="Toggle Theme (Noir / Platinum)">
+        <i class="fas fa-moon" id="theme-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Metric Statistics Ribbon (Horizontal) -->
+  <section class="stats-ribbon">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-users"></i>
+      </div>
+      <div>
+        <div class="stat-val" id="stat-users">--</div>
+        <div class="stat-lbl">Customer Nodes</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <div>
+        <div class="stat-val" id="stat-products">--</div>
+        <div class="stat-lbl">Product Catalog</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-bezier-curve"></i>
+      </div>
+      <div>
+        <div class="stat-val" id="stat-edges">--</div>
+        <div class="stat-lbl">Graph Behavior Edges</div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-bolt"></i>
+      </div>
+      <div>
+        <div class="stat-val" id="stat-interactions">--</div>
+        <div class="stat-lbl">Interactions Logged</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Horizontal Dashboard Row: Profile | Simulator | Activity Stream -->
+  <section class="horizontal-dashboard-container">
+    <div class="horizontal-dashboard">
+      
+      <!-- Panel 1: Customer Profile -->
+      <div class="h-card">
+        <div class="h-card-title">
+          <span>Active Customer Persona</span>
+          <i class="fas fa-id-card"></i>
+        </div>
+        <div class="user-profile-horizontal">
+          <div class="user-avatar-circle" id="user-avatar-text">U</div>
+          <div style="flex:1;">
+            <div class="user-meta-name" id="user-card-name">Customer Name</div>
+            <div class="user-meta-sub" id="user-card-id">U0001 &bull; Age -- &bull; ACTIVE</div>
+            <div class="interest-chips" id="user-card-interests">
+              <span class="chip">Electronics</span>
+            </div>
+          </div>
+        </div>
+        <div class="user-switcher-wrap">
+          <label style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; font-weight:600; display:block; margin-bottom:0.25rem;">Switch Customer Persona</label>
+          <select id="user-select">
+            <option value="">Loading customer personas...</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Panel 2: Live Behavior Simulator -->
+      <div class="h-card">
+        <div class="h-card-title">
+          <span>Real-Time Behavior Simulator</span>
+          <i class="fas fa-bolt"></i>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.6rem;">
+          Trigger live actions to dynamically train graph embeddings and recalculate affinity scores.
+        </p>
+        <div class="simulator-horizontal-form">
+          <div class="form-group">
+            <label>Target Product</label>
+            <select id="sim-product-select"></select>
+          </div>
+          <div class="form-group">
+            <label>Action</label>
+            <select id="sim-action-select">
+              <option value="view">View (1.0)</option>
+              <option value="search_click">Search (1.5)</option>
+              <option value="cart">Add to Cart (3.0)</option>
+              <option value="purchase">Purchase (5.0)</option>
+            </select>
+          </div>
+          <button class="btn-primary" id="btn-sim-action">
+            <i class="fas fa-paper-plane"></i> Execute
+          </button>
+        </div>
+      </div>
+
+      <!-- Panel 3: Live Session Stream -->
+      <div class="h-card">
+        <div class="h-card-title">
+          <span>Recent Customer Interactions</span>
+          <i class="fas fa-history"></i>
+        </div>
+        <div class="history-stream-horizontal" id="user-history-list">
+          <div style="color:var(--text-muted); font-size:0.8rem;">Loading recent sessions...</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.6rem;">
+          <span style="font-size:0.72rem; color:var(--text-muted);" id="user-history-count">-- events logged</span>
+          <button class="btn-secondary" style="font-size:0.72rem; padding:0.25rem 0.6rem;" onclick="refreshDashboard()">
+            <i class="fas fa-sync-alt"></i> Refresh Graph
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Main Content Wrap -->
+  <main class="main-content-wrap">
+
+    <!-- ===================================================================
+         VIEW 1: HOMEPAGE (Horizontal Scrolling Products & Live Recommendations)
+         =================================================================== -->
+    <div id="tab-home" class="view-panel">
+      
+      <!-- Section: Featured Products with Horizontal Scrolling -->
+      <section style="margin-bottom: 2.5rem;">
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">E-Commerce Product Catalog</h2>
+            <p class="section-subtitle">
+              Browse products across multi-relational categories. Select any item to view detailed specifications and graph connectivity.
+            </p>
+          </div>
+          <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+            <button class="btn-secondary" id="btn-toggle-autoscroll" style="font-size:0.75rem; padding:0.35rem 0.75rem; border-radius:9999px;">
+              <i class="fas fa-sync-alt fa-spin" id="autoscroll-icon" style="color:#10B981; font-size:0.7rem;"></i>
+              <span id="autoscroll-text" style="font-weight:600;">Auto-Scroll: Left ➔ Right</span>
+            </button>
+            <input type="text" id="product-search-input" placeholder="Search catalog..." style="max-width:180px; padding:0.4rem 0.75rem; font-size:0.8rem;">
+            <span style="font-size:0.75rem; color:var(--silver-400); font-weight:600;" id="catalog-count-badge">50 Items</span>
+          </div>
+        </div>
+
+        <!-- Category Filter Pills (Horizontal) -->
+        <div class="category-filter-row" id="category-filter-container">
+          <button class="cat-pill active" data-category="ALL">All Categories</button>
+          <button class="cat-pill" data-category="Electronics">Electronics</button>
+          <button class="cat-pill" data-category="Fashion">Fashion</button>
+          <button class="cat-pill" data-category="Home & Kitchen">Home &amp; Kitchen</button>
+          <button class="cat-pill" data-category="Sports & Fitness">Sports &amp; Fitness</button>
+          <button class="cat-pill" data-category="Books & Media">Books &amp; Media</button>
+          <button class="cat-pill" data-category="Beauty & Wellness">Beauty &amp; Wellness</button>
+        </div>
+
+        <!-- Horizontal Scrolling Carousel with Navigation Buttons -->
+        <div class="carousel-wrapper">
+          <button class="scroll-btn prev" id="scroll-prev-btn" aria-label="Scroll Left">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          
+          <div class="product-scroll-track" id="product-carousel-track">
+            <!-- Dynamically populated horizontal cards with images -->
+          </div>
+
+          <button class="scroll-btn next" id="scroll-next-btn" aria-label="Scroll Right">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Section: Homepage Live Recommendations -->
+      <section>
+        <div class="section-header-row">
+          <div>
+            <h2 class="section-title">Personalized Recommendations For You</h2>
+            <p class="section-subtitle" id="recs-subtitle">
+              Powered by PyTorch LightGCN graph convolutions &amp; multi-hop Personalized PageRank.
+            </p>
+          </div>
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Model:</label>
+              <select id="model-select" style="font-size:0.8rem; padding:0.35rem 0.6rem; min-width:180px;">
+                <option value="hybrid" selected>Hybrid (LightGCN + PPR)</option>
+                <option value="lightgcn">LightGCN (GNN)</option>
+                <option value="ppr">Personalized PageRank</option>
+                <option value="itemcf">ItemCF</option>
+                <option value="mf">Matrix Factorization</option>
+                <option value="popularity">Popularity Baseline</option>
+              </select>
+            </div>
+            <div style="display:flex; align-items:center; gap:0.4rem;">
+              <label style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Top-K: <b id="k-val-display" style="color:var(--text-primary);">8</b></label>
+              <input type="range" id="k-slider" min="4" max="16" value="8" step="1" style="width:90px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendations Grid -->
+        <div class="recs-grid" id="recs-container">
+          <!-- Dynamically populated recommendation cards -->
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===================================================================
+         VIEW 2: DEDICATED PERSONALIZED RECOMMENDATIONS TAB
+         =================================================================== -->
+    <div id="tab-recs" class="view-panel" style="display:none;">
+      <div class="recs-control-bar">
+        <div>
+          <h2 style="font-size:1.25rem; font-weight:800; color:var(--text-primary);">High-Affinity Graph Recommendations</h2>
+          <div style="font-size:0.8rem; color:var(--text-muted);">
+            Multi-objective ranking combining recursive collaborative embeddings with PageRank diffusion.
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <button class="btn-primary" onclick="fetchRecommendations()">
+            <i class="fas fa-sync-alt"></i> Recalculate Rankings
+          </button>
+        </div>
+      </div>
+      <div class="recs-grid" id="tab-recs-container"></div>
+    </div>
+
+    <!-- ===================================================================
+         VIEW 3: INTERACTIVE BEHAVIORAL NETWORK GRAPH
+         =================================================================== -->
+    <div id="tab-graph" class="view-panel" style="display:none;">
+      <div class="graph-card">
+        <div class="graph-toolbar">
+          <div>
+            <h3 id="graph-title-status" style="font-size:1.15rem; font-weight:800;">Customer Ego-Network Visualization</h3>
+            <div style="font-size:0.78rem; color:var(--text-muted);">
+              Heterogeneous graph topology connecting User &bull; Product &bull; Category via multi-type behavioral edges
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <button class="btn-secondary btn-primary" id="btn-graph-ego">
+              <i class="fas fa-user"></i> Customer Ego-Network
+            </button>
+            <button class="btn-secondary" id="btn-graph-sample">
+              <i class="fas fa-globe"></i> Macro Catalog Network
+            </button>
+          </div>
+        </div>
+
+        <div class="graph-legend" style="margin-bottom:1rem;">
+          <div class="legend-item"><span class="legend-dot" style="background:#FFFFFF; border:1px solid #94A3B8;"></span> Customer</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#CBD5E1;"></span> Product</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#64748B; border-radius:2px;"></span> Category</div>
+          <div class="legend-item"><span style="color:#FFFFFF; font-weight:bold;">&mdash;</span> Purchased (5.0)</div>
+          <div class="legend-item"><span style="color:#CBD5E1; font-weight:bold;">&mdash;</span> Carted (3.0)</div>
+          <div class="legend-item"><span style="color:#64748B; font-weight:bold;">&ndash;&ndash;</span> Viewed (1.0)</div>
+        </div>
+
+        <div id="network-graph-container"></div>
+      </div>
+    </div>
+
+    <!-- ===================================================================
+         VIEW 4: BENCHMARK & EVALUATION
+         =================================================================== -->
+    <div id="tab-benchmark" class="view-panel" style="display:none;">
+      <div class="h-card" style="margin-bottom:1.5rem;">
+        <div class="h-card-title">
+          <span>Comparative Model Evaluation (Held-Out Temporal Test Set)</span>
+          <i class="fas fa-trophy"></i>
+        </div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem;">
+          Evaluating ranking quality (NDCG@10, HitRate@10), accuracy (Precision, Recall), and catalog diversity.
+        </p>
+        <div class="benchmark-table-wrap">
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Model Architecture</th>
+                <th>NDCG@10</th>
+                <th>HitRate@10</th>
+                <th>Precision@10</th>
+                <th>Recall@10</th>
+                <th>Catalog Coverage</th>
+                <th>Intra-List Diversity</th>
+              </tr>
+            </thead>
+            <tbody id="benchmark-table-body">
+              <tr><td colspan="7">Loading benchmark table...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="h-card">
+        <div class="h-card-title">
+          <span>Benchmark Visual Comparison</span>
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <div style="text-align:center; padding:1rem 0;">
+          <img id="benchmark-chart-img" src="/static/benchmark_results.png" alt="Benchmark Chart" style="max-width:100%; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================
+         VIEW 5: ARCHITECTURE & METHODOLOGY
+         =================================================================== -->
+    <div id="tab-arch" class="view-panel" style="display:none;">
+      <div class="h-card">
+        <div class="h-card-title">
+          <span>System Pipeline &amp; Graph Neural Network Methodology</span>
+          <i class="fas fa-sitemap"></i>
+        </div>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.25rem; margin-top:1rem;">
+          <div style="background:var(--bg-card-subtle); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <h4 style="color:var(--text-primary); margin-bottom:0.5rem;"><i class="fas fa-database"></i> 1. Preprocessing</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">
+              Generates multi-relational behavioral interaction logs (view, click, cart, purchase, rating) with temporal splits.
+            </p>
+          </div>
+          <div style="background:var(--bg-card-subtle); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <h4 style="color:var(--text-primary); margin-bottom:0.5rem;"><i class="fas fa-project-diagram"></i> 2. Graph Construction</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">
+              Builds a heterogeneous graph connecting Users, Products, and Categories with normalized symmetric adjacency.
+            </p>
+          </div>
+          <div style="background:var(--bg-card-subtle); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <h4 style="color:var(--text-primary); margin-bottom:0.5rem;"><i class="fas fa-brain"></i> 3. LightGCN Convolution</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">
+              Computes recursive neighborhood message passing over interaction matrices, trained via Bayesian Personalized Ranking (BPR) loss.
+            </p>
+          </div>
+          <div style="background:var(--bg-card-subtle); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color);">
+            <h4 style="color:var(--text-primary); margin-bottom:0.5rem;"><i class="fas fa-layer-group"></i> 4. Hybrid Ranking &amp; Explainability</h4>
+            <p style="font-size:0.8rem; color:var(--text-muted);">
+              Combines LightGCN dot products with Personalized PageRank diffusion scores and synthesizes explainable graph traversal paths.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===================================================================
+       PRODUCT DETAILS MODAL DIALOG (HTML5 <dialog>)
+       =================================================================== -->
+  <dialog class="product-modal" id="product-details-modal">
+    <div class="modal-inner">
+      <!-- Media Column -->
+      <div class="modal-media-col">
+        <img id="modal-img" src="" alt="Product Image" class="modal-media-img">
+        <span class="product-badge-category" id="modal-category">CATEGORY</span>
+      </div>
+
+      <!-- Content Column -->
+      <div class="modal-content-col">
+        <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <div class="modal-prod-category" id="modal-brand-badge">Brand &bull; Category</div>
+        <h3 class="modal-prod-title" id="modal-title">Product Name</h3>
+        <div class="modal-prod-price" id="modal-price">₹0.00</div>
+
+        <!-- Description / Specs -->
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:1rem; line-height:1.5;" id="modal-description">
+          High-performance product engineered for the personalized recommendation graph network.
+        </p>
+
+        <!-- Graph Behavioral Intelligence Panel -->
+        <div class="modal-graph-intel">
+          <div class="modal-graph-intel-title">
+            <i class="fas fa-project-diagram"></i> Graph Behavior Metrics
+          </div>
+          <div class="graph-stats-row">
+            <div>
+              <div class="graph-stat-num" id="modal-stat-views">0</div>
+              <div class="graph-stat-label">Views</div>
+            </div>
+            <div>
+              <div class="graph-stat-num" id="modal-stat-clicks">0</div>
+              <div class="graph-stat-label">Clicks</div>
+            </div>
+            <div>
+              <div class="graph-stat-num" id="modal-stat-carts">0</div>
+              <div class="graph-stat-label">Carts</div>
+            </div>
+            <div>
+              <div class="graph-stat-num" id="modal-stat-purchases">0</div>
+              <div class="graph-stat-label">Purchases</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Co-Interacted Neighbors -->
+        <div style="margin-bottom:1.25rem;">
+          <div style="font-size:0.72rem; color:var(--text-muted); font-weight:700; text-transform:uppercase; margin-bottom:0.4rem;">
+            Graph Co-Purchased Neighbors:
+          </div>
+          <div id="modal-co-items" style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+            <span class="chip">Computing neighbors...</span>
+          </div>
+        </div>
+
+        <!-- Modal Action Buttons -->
+        <div class="modal-actions">
+          <button class="btn-secondary" id="modal-btn-cart">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <button class="btn-primary" id="modal-btn-buy">
+            <i class="fas fa-bolt"></i> Instant Purchase
+          </button>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Floating Toast Notification -->
+  <div class="toast" id="toast-notification">
+    <i class="fas fa-check-circle" style="color:#090A0C;"></i>
+    <span id="toast-text">Action recorded successfully.</span>
+  </div>
+
+  <!-- Client Application Controller -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

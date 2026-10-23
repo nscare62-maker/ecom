@@ -1,0 +1,101 @@
+user_id,name,age_group,activity_level,primary_interest,interests
+U0001,Dakota Smith,35-49,medium,Beauty & Wellness,Beauty & Wellness
+U0002,Morgan Kumar,18-24,vip,Beauty & Wellness,Beauty & Wellness
+U0003,Alex Chen,25-34,low,Fashion,Fashion
+U0004,Avery Patel,35-49,low,Fashion,"Fashion,Sports & Fitness"
+U0005,Taylor Kim,25-34,high,Home & Kitchen,"Home & Kitchen,Fashion"
+U0006,Jordan Smith,35-49,high,Electronics,"Electronics,Home & Kitchen"
+U0007,Alex Miller,18-24,high,Sports & Fitness,Sports & Fitness
+U0008,Dakota Wilson,18-24,low,Books & Media,"Books & Media,Fashion"
+U0009,Dakota Patel,18-24,vip,Electronics,"Electronics,Fashion"
+U0010,Sam Miller,35-49,medium,Fashion,"Fashion,Home & Kitchen"
+U0011,Dakota Garcia,25-34,medium,Books & Media,Books & Media
+U0012,Taylor Miller,25-34,high,Home & Kitchen,"Home & Kitchen,Books & Media"
+U0013,Alex Patel,50+,high,Home & Kitchen,Home & Kitchen
+U0014,Jordan Patel,50+,vip,Fashion,"Fashion,Sports & Fitness"
+U0015,Taylor Garcia,35-49,vip,Fashion,Fashion
+U0016,Jamie Kim,50+,low,Fashion,"Fashion,Beauty & Wellness"
+U0017,Alex Smith,25-34,vip,Beauty & Wellness,Beauty & Wellness
+U0018,Jamie Smith,50+,high,Sports & Fitness,"Sports & Fitness,Books & Media"
+U0019,Avery Chen,35-49,high,Beauty & Wellness,Beauty & Wellness
+U0020,Jordan Garcia,18-24,high,Fashion,"Fashion,Sports & Fitness"
+U0021,Avery Kumar,35-49,medium,Beauty & Wellness,Beauty & Wellness
+U0022,Taylor Johnson,18-24,high,Books & Media,Books & Media
+U0023,Riley Chen,35-49,medium,Home & Kitchen,Home & Kitchen
+U0024,Alex Patel,50+,low,Electronics,Electronics
+U0025,Avery Kumar,50+,medium,Beauty & Wellness,Beauty & Wellness
+U0026,Sam Davis,25-34,high,Fashion,"Fashion,Books & Media"
+U0027,Casey Johnson,18-24,medium,Books & Media,"Books & Media,Sports & Fitness"
+U0028,Morgan Smith,25-34,medium,Electronics,"Electronics,Books & Media"
+U0029,Alex Smith,18-24,low,Fashion,Fashion
+U0030,Chris Smith,50+,medium,Home & Kitchen,Home & Kitchen
+U0031,Avery Kumar,50+,medium,Fashion,"Fashion,Sports & Fitness"
+U0032,Jordan Smith,50+,vip,Home & Kitchen,"Home & Kitchen,Sports & Fitness"
+U0033,Reese Chen,50+,high,Electronics,Electronics
+U0034,Jordan Patel,50+,medium,Fashion,Fashion
+U0035,Casey Kumar,18-24,vip,Sports & Fitness,"Sports & Fitness,Fashion"
+U0036,Avery Smith,18-24,low,Beauty & Wellness,Beauty & Wellness
+U0037,Morgan Kumar,25-34,vip,Sports & Fitness,"Sports & Fitness,Beauty & Wellness"
+U0038,Alex Kumar,35-49,vip,Electronics,"Electronics,Sports & Fitness"
+U0039,Sam Kim,35-49,medium,Fashion,"Fashion,Beauty & Wellness"
+U0040,Alex Wilson,35-49,low,Beauty & Wellness,Beauty & Wellness
+U0041,Alex Wilson,25-34,low,Books & Media,"Books & Media,Beauty & Wellness"
+U0042,Avery Smith,18-24,medium,Electronics,Electronics
+U0043,Casey Smith,18-24,low,Books & Media,Books & Media
+U0044,Casey Wilson,35-49,medium,Home & Kitchen,"Home & Kitchen,Fashion"
+U0045,Sam Kim,35-49,vip,Beauty & Wellness,Beauty & Wellness
+U0046,Chris Smith,18-24,low,Sports & Fitness,Sports & Fitness
+U0047,Avery Patel,18-24,medium,Fashion,"Fashion,Home & Kitchen"
+U0048,Chris Garcia,35-49,low,Sports & Fitness,Sports & Fitness
+U0049,Dakota Davis,25-34,high,Beauty & Wellness,"Beauty & Wellness,Electronics"
+U0050,Jordan Smith,35-49,medium,Home & Kitchen,Home & Kitchen
+U0051,Reese Johnson,35-49,vip,Beauty & Wellness,Beauty & Wellness
+U0052,Sam Chen,50+,high,Beauty & Wellness,Beauty & Wellness
+U0053,Alex Chen,25-34,vip,Fashion,"Fashion,Home & Kitchen"
+U0054,Avery Kim,18-24,medium,Electronics,Electronics
+U0055,Avery Chen,25-34,vip,Books & Media,"Books & Media,Beauty & Wellness"
+U0056,Taylor Chen,35-49,medium,Home & Kitchen,"Home & Kitchen,Electronics"
+U0057,Dakota Patel,50+,medium,Home & Kitchen,Home & Kitchen
+U0058,Morgan Kumar,18-24,medium,Sports & Fitness,Sports & Fitness
+U0059,Reese Johnson,35-49,medium,Beauty & Wellness,"Beauty & Wellness,Fashion"
+U0060,Reese Smith,25-34,medium,Electronics,"Electronics,Sports & Fitness"
+U0061,Riley Johnson,18-24,medium,Fashion,"Fashion,Beauty & Wellness"
+U0062,Casey Johnson,35-49,vip,Electronics,"Electronics,Home & Kitchen"
+U0063,Dakota Davis,35-49,medium,Electronics,"Electronics,Beauty & Wellness"
+U0064,Jamie Garcia,50+,high,Electronics,Electronics
+U0065,Reese Johnson,18-24,vip,Books & Media,"Books & Media,Beauty & Wellness"
+U0066,Jamie Patel,18-24,medium,Electronics,"Electronics,Sports & Fitness"
+U0067,Chris Kim,35-49,high,Beauty & Wellness,Beauty & Wellness
+U0068,Dakota Smith,50+,high,Books & Media,"Books & Media,Home & Kitchen"
+U0069,Casey Garcia,50+,vip,Fashion,Fashion
+U0070,Dakota Kumar,18-24,high,Sports & Fitness,"Sports & Fitness,Books & Media"
+U0071,Sam Patel,35-49,vip,Books & Media,"Books & Media,Beauty & Wellness"
+U0072,Riley Miller,50+,medium,Books & Media,Books & Media
+U0073,Dakota Smith,35-49,low,Books & Media,"Books & Media,Beauty & Wellness"
+U0074,Morgan Garcia,25-34,low,Fashion,Fashion
+U0075,Alex Patel,50+,vip,Books & Media,"Books & Media,Electronics"
+U0076,Dakota Wilson,50+,vip,Beauty & Wellness,Beauty & Wellness
+U0077,Casey Patel,18-24,low,Beauty & Wellness,Beauty & Wellness
+U0078,Casey Patel,50+,low,Beauty & Wellness,Beauty & Wellness
+U0079,Avery Patel,25-34,vip,Sports & Fitness,Sports & Fitness
+U0080,Dakota Davis,50+,vip,Sports & Fitness,"Sports & Fitness,Books & Media"
+U0081,Taylor Miller,35-49,vip,Home & Kitchen,"Home & Kitchen,Fashion"
+U0082,Dakota Patel,35-49,medium,Sports & Fitness,"Sports & Fitness,Electronics"
+U0083,Sam Johnson,25-34,medium,Books & Media,"Books & Media,Electronics"
+U0084,Morgan Kim,25-34,low,Beauty & Wellness,Beauty & Wellness
+U0085,Casey Kim,50+,low,Books & Media,"Books & Media,Sports & Fitness"
+U0086,Morgan Kim,50+,vip,Books & Media,"Books & Media,Electronics"
+U0087,Alex Johnson,25-34,vip,Sports & Fitness,"Sports & Fitness,Beauty & Wellness"
+U0088,Morgan Garcia,50+,high,Sports & Fitness,"Sports & Fitness,Electronics"
+U0089,Dakota Kim,25-34,low,Sports & Fitness,Sports & Fitness
+U0090,Casey Wilson,50+,medium,Electronics,Electronics
+U0091,Riley Kumar,50+,high,Home & Kitchen,Home & Kitchen
+U0092,Morgan Miller,35-49,vip,Home & Kitchen,"Home & Kitchen,Sports & Fitness"
+U0093,Sam Smith,18-24,high,Electronics,"Electronics,Books & Media"
+U0094,Morgan Smith,25-34,medium,Electronics,Electronics
+U0095,Alex Wilson,25-34,vip,Fashion,Fashion
+U0096,Dakota Smith,35-49,high,Sports & Fitness,Sports & Fitness
+U0097,Taylor Wilson,35-49,low,Fashion,Fashion
+U0098,Jamie Chen,50+,medium,Books & Media,"Books & Media,Sports & Fitness"
+U0099,Jordan Wilson,35-49,low,Electronics,Electronics
+U0100,Jamie Chen,35-49,low,Books & Media,"Books & Media,Sports & Fitness"

@@ -144,6 +144,36 @@ python -m unittest tests.test_pipeline
 
 ---
 
+## ☁️ Deploy to Render
+
+This application is ready for 1-click deployment on [Render](https://render.com):
+
+### Option 1: Blueprint Deployment (Fastest)
+1. Go to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** ➔ **Blueprint**.
+3. Connect your GitHub repository (`nscare62-maker/ecom`).
+4. Render automatically reads `render.yaml` and provisions the Web Service with Python 3.11 and CPU-optimized PyTorch.
+5. Click **Apply**.
+
+### Option 2: Manual Web Service Setup
+1. In Render Dashboard, click **New +** ➔ **Web Service**.
+2. Connect `nscare62-maker/ecom`.
+3. Set the following configuration:
+   - **Environment**: `Python`
+   - **Region**: `Oregon (US West)` or nearest
+   - **Branch**: `main`
+   - **Build Command**:
+     ```bash
+     pip install --upgrade pip && pip install --extra-index-url https://download.pytorch.org/whl/cpu -r requirements.txt
+     ```
+   - **Start Command**:
+     ```bash
+     python run_server.py
+     ```
+4. Click **Create Web Service**. Your live URL will be active in ~2 minutes (e.g. `https://ecom-graph-rec.onrender.com`).
+
+---
+
 ## 🌐 REST API Endpoints
 
 - `GET /api/overview` - Network summary statistics, node counts, and edge distributions.
